@@ -57,7 +57,7 @@
 		<a href="logout.php">Logout</a>
 		</center>
 		</div>
-		<span id="top_span"><marquee>Note:- This portal is open till 31 March 2020...Plz edit your information, if wrong.</marquee></span>
+		<span id="top_span"><marquee>Note:- This portal is open till 31 March 2022...Plz edit your information, if wrong.</marquee></span>
 		<div id="left_side"><br><br><br>
 			<form action="" method="POST">
 				<table>
@@ -113,6 +113,25 @@
 					<tr>
 						<td>
 							<input type="submit" name="show_teachers" value="Show Teachers">
+						</td>
+					</tr>
+				</table>
+			</form><br>
+			<form action="" method="POST">
+				<table>
+					<tr>
+						<td>
+							<input type="submit" name="show_marks" value="Show Marks">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="submit" name="add_marks" value="Add Marks">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="submit" name="delete_marks" value="Delete Marks">
 						</td>
 					</tr>
 				</table>
@@ -588,6 +607,175 @@
 						</center>
 						<?php
 								}
+					}
+				?>
+
+<!--Marks Section-->
+				<?php
+					if(isset($_POST['show_marks'])){
+						?>
+						<center>
+							<form action="" method="POST">
+								Enter Roll No:
+								<input type="text" name="roll_no">
+								<input type="submit" name="show_student_marks" value="search">
+							</form>
+						</center>
+						<?php
+					}
+
+				if(isset($_POST['show_student_marks'])){
+					//$query = "select * from marks join students on marks.s_no = students.s_no ";
+					$query = "select m.*, s.roll_no, s.name from marks m left join students s on m.s_no=s.s_no where s.roll_no = $_POST[roll_no]";
+					$query_run = mysqli_query($connection,$query);
+					while($row = mysqli_fetch_assoc($query_run)){
+							?>
+							<center>
+							<form action="" method="POST">
+								<table>
+							<tr>
+								<td>
+									<b>Student ID:</b>
+								</td> 
+								<td>
+									<input type="text" name="s_no" value="<?php echo $row['s_no']?>" disabled >
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Roll No:</b>
+								</td> 
+								<td>
+									<input type="text" name="roll_no" value="<?php echo $row['roll_no']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Name:</b>
+								</td> 
+								<td>
+									<input type="text" name="name" value="<?php echo $row['name']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>DBMS:</b>
+								</td> 
+								<td>
+									<input type="text" name="DBMS" value="<?php echo $row['DBMS']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>CNS:</b>
+								</td> 
+								<td>
+									<input type="text" name="CNS" value="<?php echo $row['CNS']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>TOC:</b>
+								</td> 
+								<td>
+									<input type="text" name="TOC" value="<?php echo $row['TOC']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td><b>SPOS:</b></td>
+								<td>
+									<input type="text" name="SPOS" value="<?php echo $row['SPOS']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>DS:</b>
+								</td> 
+								<td>
+									<input type="text" name="DS" value="<?php echo $row['DS']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Percentage %:</b>
+								</td> 
+								<td>
+									<input type="text" name="percentage" value="<?php echo $row['percentage']?>" disabled>
+								</td>
+							</tr>
+						</table><br><br>
+							</form>
+							<button onclick="window.print()">Print Result</button>
+						</center>
+							<?php
+						}
+					}
+				
+				?>
+
+				<?php
+					if(isset($_POST['add_marks'])){
+						?>
+						<center>
+							<form action="" method="POST">
+								Enter Serial No:
+								<input type="text" name="s_no">
+								<input type="submit" name="add_student_marks" value="search">
+							</form>
+						</center>
+						<?php
+					}
+					if(isset($_POST['add_student_marks'])){
+						?>
+						<center><h3>Fill the marks Details:</h3></center>
+						<form action="add_marks.php" method="POST">
+							<table>
+								<tr>
+									<td>s_no: </td>
+									<td><input type="text" name="s_no"></td>
+								</tr>
+								<tr>
+									<td>DBMS: </td>
+									<td><input type="text" name="DBMS" required></td>
+								</tr>
+								<tr>
+									<td>CNS: </td>
+									<td><input type="text" name="CNS" required></td>
+								</tr>
+								<tr>
+									<td>TOC: </td>
+									<td><input type="text" name="TOC" required></td>
+								</tr>
+								<tr>
+									<td>SPOS: </td>
+									<td><input type="text" name="SPOS" required></td>
+								</tr>
+								<tr>
+									<td>DS: </td>
+									<td><input type="text" name="DS" required></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type="submit" name="add" value="Add Marks"></td>
+								</tr>
+							</table>
+						</form>
+						<?php
+
+					}
+				?>
+
+				<?php
+					if(isset($_POST['delete_marks'])){
+						?>
+						<center>
+							<h3>Enter Serial No of student whose marks are to be deleted</h3><br><br>
+							<form action="delete_marks.php" method="POST">
+								Roll No: <input type="text" name="s_no">
+								<input type="submit" name="search_by_roll_no_for_delete" value="delete marks">
+							</form>
+						</center>
+						<?php
 					}
 				?>
 			</div>
