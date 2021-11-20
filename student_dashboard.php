@@ -53,7 +53,7 @@
 	</head>
 	<body>
 		<div id="header">
-			<center>Student Management System &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <?php echo $_SESSION['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name:<?php echo $_SESSION['name'];?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<center>College Management System &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <?php echo $_SESSION['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name:<?php echo $_SESSION['name'];?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="logout.php">Logout</a>
 		</center>
 		</div>
@@ -69,6 +69,11 @@
 					<tr>
 						<td>
 							<input type="submit" name="edit_detail" value="Edit Details">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="submit" name="show_marks" value="Show Result">
 						</td>
 					</tr>
 				</table>
@@ -168,7 +173,7 @@
 								<b>Roll No:</b>
 							</td> 
 							<td>
-								<input type="text" name="roll_no" value="<?php echo $row['roll_no']?>">
+								<input type="text" name="roll_no" value="<?php echo $row['roll_no']?>" disabled>
 							</td>
 						</tr>
 						<tr>
@@ -239,6 +244,97 @@
 				}
 			}
 			?>
+
+			<?php
+			if(isset($_POST['show_marks'])){
+					//$query = "select * from marks join students on marks.s_no = students.s_no ";
+					$query = "select m.*, s.roll_no, s.name from marks m  join students s on m.s_no=s.s_no where s.email='$_SESSION[email]'";
+					$query_run = mysqli_query($connection,$query);
+					while($row = mysqli_fetch_assoc($query_run)){
+							?>
+							<center>
+							<form action="" method="POST">
+								<table>
+							<tr>
+								<td>
+									<b>Student ID:</b>
+								</td> 
+								<td>
+									<input type="text" name="s_no" value="<?php echo $row['s_no']?>" disabled >
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Roll No:</b>
+								</td> 
+								<td>
+									<input type="text" name="roll_no" value="<?php echo $row['roll_no']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Name:</b>
+								</td> 
+								<td>
+									<input type="text" name="name" value="<?php echo $row['name']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>DBMS:</b>
+								</td> 
+								<td>
+									<input type="text" name="DBMS" value="<?php echo $row['DBMS']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>CNS:</b>
+								</td> 
+								<td>
+									<input type="text" name="CNS" value="<?php echo $row['CNS']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>TOC:</b>
+								</td> 
+								<td>
+									<input type="text" name="TOC" value="<?php echo $row['TOC']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td><b>SPOS:</b></td>
+								<td>
+									<input type="text" name="SPOS" value="<?php echo $row['SPOS']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>DS:</b>
+								</td> 
+								<td>
+									<input type="text" name="DS" value="<?php echo $row['DS']?>" disabled>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>Percentage %:</b>
+								</td> 
+								<td>
+									<input type="text" name="percentage" value="<?php echo $row['percentage']?>" disabled>
+								</td>
+							</tr>
+						</table><br><br>
+							</form>
+							<button onclick="window.print()">Print Result</button>
+						</center>
+							<?php
+						}
+					}
+				
+				?>
+
 			</div>
 		</div>
 	</body>
