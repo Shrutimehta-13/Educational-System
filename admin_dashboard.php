@@ -53,7 +53,7 @@
 	</head>
 	<body>
 		<div id="header">
-			<center>Student Management System &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <?php echo $_SESSION['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name:<?php echo $_SESSION['name'];?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<center>College Management System &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <?php echo $_SESSION['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name:<?php echo $_SESSION['name'];?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="logout.php">Logout</a>
 		</center>
 		</div>
@@ -132,6 +132,15 @@
 					<tr>
 						<td>
 							<input type="submit" name="delete_marks" value="Delete Marks">
+						</td>
+					</tr>
+				</table>
+			</form><br><br>
+			<form action="" method="POST">
+				<table>
+					<tr>
+						<td>
+							<input type="submit" name="show_certificate" value="Generate Certificate">
 						</td>
 					</tr>
 				</table>
@@ -289,7 +298,7 @@
 								</tr>
 								<tr>
 									<td>Password: </td>
-									<td><input type="text" name="password" required></td>
+									<td><input type="password" name="password" required></td>
 								</tr>
 								<tr>
 									<td>Remark: </td>
@@ -323,7 +332,7 @@
 					if(isset($_POST['show_students'])){
 						?>
 						<center>
-							<h3> Teachers Details</h3>
+							<h3> Students Details</h3>
 							<table>
 								<tr>
 									<td id="td"><b>Roll No</b></td>
@@ -778,6 +787,43 @@
 						<?php
 					}
 				?>
+
+<!--Certificate Section -->
+				
+				<?php
+					if(isset($_POST['show_certificate'])){
+						?>
+						<center>
+							<form action="" method="POST">
+								Enter Roll No:
+								<input type="text" name="roll_no">
+								<input type="submit" name="search_certificate" value="search">
+							</form>
+						</center>
+						<?php
+					}
+					if(isset($_POST['search_certificate'])){
+						$query = "select m.*, s.roll_no, s.name, s.father_name, s.email from marks m  join students s on m.s_no=s.s_no where s.roll_no='$_POST[roll_no]'";
+						$query_run = mysqli_query($connection, $query);
+						while($row = mysqli_fetch_assoc($query_run)){
+							?>
+							<center>
+								<h2>Leaving Certificate</h2><br>
+
+
+								<p><h6>Name:&nbsp;&nbsp;<span><?php echo $row['name'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email:&nbsp;&nbsp;<span></span><?php echo $row['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								Father's Name:&nbsp;&nbsp;<span><?php echo $row['father_name'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Roll No:&nbsp;&nbsp;<span><?php echo $row['roll_no'];?></span></h6><br><br>
+							
+								This is to certify that <b><?php echo $row['name'];?></b>, child of <b><?php echo $row['father_name'];?></b> has successfully completed the required college years from AISSMS IOIT with percentage of <b><?php echo $row['percentage'];?></b>.<p> Wishing him/her Best of Luck for Future!
+							</center><br><br>
+							<p style="text-align: center;"> Regards, <br> Mahesh Kamat (HOD)
+							<br><br><br>
+							<button onclick="window.print()">Print Certificate</button>
+							<?php
+						}
+					}
+				?>
+
 			</div>
 		</div>
 	</body>
