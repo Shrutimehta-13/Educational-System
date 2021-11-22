@@ -1,0 +1,16 @@
+body{
+
+}
+
+.header{
+  /* text-align:  center; */
+  padding: 50px;
+  background-color: #EFF8FF;
+
+}
+
+.home_button{
+  width: 40px;
+  float: left;
+
+}
