@@ -17,14 +17,14 @@
 			color: white;
 		}
 		#left_side{
-			height: 75%;
+			height: 90%;
 			width: 15%;
 			top: 10%;
 			position: fixed;
 		}
 		#right_side{
 			height: 75%;
-			width: 85%;
+			width: 80%;
 			background-color: whitesmoke;
 			position: fixed;
 			left: 17%;
@@ -58,7 +58,7 @@
 		</center>
 		</div>
 		<span id="top_span"><marquee>Note:- This portal is open till 31 March 2022...Plz edit your information, if wrong.</marquee></span>
-		<div id="left_side"><br><br><br>
+		<div id="left_side"><br><br>
 			<form action="" method="POST">
 				<table>
 					<tr>
@@ -135,7 +135,16 @@
 						</td>
 					</tr>
 				</table>
-			</form><br><br>
+			</form><br>
+			<form action="" method="POST">
+				<table>
+					<tr>
+						<td>
+							<input type="submit" name="pay_fees" value="Pay Fees">
+						</td>
+					</tr>
+				</table>
+			</form>
 			<form action="" method="POST">
 				<table>
 					<tr>
@@ -145,9 +154,22 @@
 					</tr>
 				</table>
 			</form>
+			<form action="" method="POST">
+				<table>
+					<tr>
+						<td>
+							<input type="submit" name="add_timetable" value="Time Table">
+						</td>
+					</tr>
+				</table>
+			</form>
 		</div>
+
 		<div id="right_side"><br><br>
 			<div id="demo">
+
+<!--Student Section -->
+
 				<?php
 					if(isset($_POST['search_student'])){
 						?>
@@ -163,6 +185,10 @@
 					if(isset($_POST['search_by_roll_no_for_search'])){
 						$query = "select * from students where roll_no = '$_POST[roll_no]'";
 						$query_run = mysqli_query($connection, $query);
+						if(mysqli_num_rows($query_run) <= 0)
+						{
+						    echo "No results found";
+						} else {
 						while($row = mysqli_fetch_assoc($query_run)){
 							?>
 							<table>
@@ -183,6 +209,10 @@
 									<td><input type="text" value="<?php echo $row['class'];?>" disabled></td>
 								</tr>
 								<tr>
+									<td><b>Department:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+									<td><input type="text" value="<?php echo $row['department'];?>" disabled></td>
+								</tr>
+								<tr>
 									<td><b>Mobile:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 									<td><input type="text" value="<?php echo $row['mobile'];?>" disabled></td>
 								</tr>
@@ -201,6 +231,7 @@
 							</table>
 							<?php
 						}
+						}
 					}
 				?>
 				<?php
@@ -218,6 +249,10 @@
 					if(isset($_POST['search_by_roll_no_for_edit'])){
 						$query = "select * from students where roll_no = '$_POST[roll_no]'";
 						$query_run = mysqli_query($connection, $query);
+						if(mysqli_num_rows($query_run) <= 0)
+						{
+						    echo "No results found";
+						} else {
 						while($row = mysqli_fetch_assoc($query_run)){
 							?>
 							<form action="admin_edit_student.php" method="POST">
@@ -236,7 +271,25 @@
 									</tr>
 									<tr>
 										<td><b>Class:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-										<td><input type="text" name="class" value="<?php echo $row['class'];?>" ></td>
+										<td><select name="class" required>
+						                    <option value=""><?php echo $row['class'];?></option> 
+						                    <option value="FE">FE</option>
+						                    <option value="SE">SE</option>
+						                    <option value="TE">TE</option>
+						                    <option value="BE">BE</option>
+						                </select></td>
+									</tr>
+									<tr>
+										<td><b>Department:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+										<td><select name="department" required>
+						                    <option value=""><?php echo $row['department'];?></option> 
+						                    <option value="Computer">Computer</option> 
+						                    <option value="IT">IT</option>
+						                    <option value="Entc">Entc</option>
+						                    <option value="Electrical">Electrical</option>
+						                    <option value="Instrumentation">Instrumentation</option>
+						                    <option value="AIDS">AIDS</option>
+						                </select></td>
 									</tr>
 									<tr>
 										<td><b>Mobile:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
@@ -262,6 +315,7 @@
 							</form>
 							<?php
 						}
+						}
 					}
 				?>
 				
@@ -286,7 +340,25 @@
 								</tr>
 								<tr>
 									<td>Class: </td>
-									<td><input type="text" name="class" required></td>
+									<td><select name="class" required>
+						                    <option value="">--Please choose an option--</option> 
+						                    <option value="FE">FE</option>
+						                    <option value="SE">SE</option>
+						                    <option value="TE">TE</option>
+						                    <option value="BE">BE</option>
+						                </select></td>
+								</tr>
+								<tr>
+									<td>Department: </td>
+									<td><select name="department" required>
+						                    <option value="">--Please choose an option--</option> 
+						                    <option value="Computer">Computer</option> 
+						                    <option value="IT">IT</option>
+						                    <option value="Entc">Entc</option>
+						                    <option value="Electrical">Electrical</option>
+						                    <option value="Instrumentation">Instrumentation</option>
+						                    <option value="AIDS">AIDS</option>
+						                </select></td>
 								</tr>
 								<tr>
 									<td>Mobile: </td>
@@ -339,6 +411,7 @@
 									<td id="td"><b>Name</b></td>
 									<td id="td"><b>Father's Name</b></td>
 									<td id="td"><b>Class</b></td>
+									<td id="td"><b>Department</b></td>
 									<td id="td"><b>Mobile</b></td>
 									<td id="td"><b>Email</b></td>
 									<td id="td"><b>Password</b></td>
@@ -359,6 +432,7 @@
 								<td id="td"><?php echo $row['name']?></td>
 								<td id="td"><?php echo $row['father_name']?></td>
 								<td id="td"><?php echo $row['class']?></td>
+								<td id="td"><?php echo $row['department']?></td>
 								<td id="td"><?php echo $row['mobile']?></td>
 								<td id="td"><?php echo $row['email']?></td>
 								<td id="td"><?php echo $row['password']?></td>
@@ -387,6 +461,10 @@
 					if(isset($_POST['search_by_t_id_for_search'])){
 						$query = "select * from teachers where t_id = '$_POST[t_id]'";
 						$query_run = mysqli_query($connection, $query);
+						if(mysqli_num_rows($query_run) <= 0)
+						{
+						    echo "No results found";
+						} else {
 						while($row = mysqli_fetch_assoc($query_run)){
 							?>
 							<table>
@@ -441,6 +519,7 @@
 						</table>
 							<?php
 						}
+						}
 					}
 				?>
 				<?php
@@ -458,6 +537,10 @@
 					if(isset($_POST['search_by_t_id_for_edit'])){
 						$query = "select * from teachers where t_id = '$_POST[t_id]'";
 						$query_run = mysqli_query($connection, $query);
+						if(mysqli_num_rows($query_run) <= 0)
+						{
+						    echo "No results found";
+						} else {
 						while($row = mysqli_fetch_assoc($query_run)){
 							?>
 							<form action="admin_edit_teacher.php" method="POST">
@@ -467,7 +550,7 @@
 									<b>Teacher ID:</b>
 								</td> 
 								<td>
-									<input type="text" name="t_id" value="<?php echo $row['t_id']?>" >
+									<input type="text" name="t_id" value="<?php echo $row['t_id']?>">
 								</td>
 							</tr>
 							<tr>
@@ -519,6 +602,7 @@
 						</table>
 							</form>
 							<?php
+						}
 						}
 					}
 				?>
@@ -620,6 +704,7 @@
 				?>
 
 <!--Marks Section-->
+
 				<?php
 					if(isset($_POST['show_marks'])){
 						?>
@@ -637,6 +722,10 @@
 					//$query = "select * from marks join students on marks.s_no = students.s_no ";
 					$query = "select m.*, s.roll_no, s.name from marks m left join students s on m.s_no=s.s_no where s.roll_no = $_POST[roll_no]";
 					$query_run = mysqli_query($connection,$query);
+					if(mysqli_num_rows($query_run) <= 0)
+						{
+						    echo "No results found";
+						} else {
 					while($row = mysqli_fetch_assoc($query_run)){
 							?>
 							<center>
@@ -718,6 +807,7 @@
 						</center>
 							<?php
 						}
+						}
 					}
 				
 				?>
@@ -787,6 +877,68 @@
 						<?php
 					}
 				?>
+			
+			
+
+
+<!-- Fees Section-->
+
+				<?php
+					if(isset($_POST['pay_fees'])){
+						?>
+						<center>
+							<form action="" method="POST">
+								Enter Roll No:
+								<input type="text" name="roll_no">
+								<input type="submit" name="student_fees" value="search">
+							</form>
+						</center>
+						<?php
+					}
+					if(isset($_POST['student_fees'])){
+						$query = "select * from students where roll_no = '$_POST[roll_no]'";
+						$query_run = mysqli_query($connection, $query);
+						if(mysqli_num_rows($query_run) <= 0)
+						{
+						    echo "No results found";
+						} else {
+						while($row = mysqli_fetch_assoc($query_run)){
+							?>
+							<center>
+							<form action="pay_fees.php" method="POST">
+								<table>
+									<tr>
+										<td><b>Roll No:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+										<td><input type="text" name="roll_no" value="<?php echo $row['roll_no']?>" disabled></td>
+									</tr>
+									<tr>
+										<td><b>Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+										<td><input type="text" name="name" value="<?php echo $row['name'];?>" disabled></td>
+									</tr>
+									<tr>
+										<td><b>Student ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+										<td><input type="text" name="s_no"></td>
+									</tr>
+									<tr>
+										<td><b>Amount:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+										<td><input type="text" name="amount" ></td>
+									</tr>
+									<tr>
+										<td><b>Date of Payment:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+										<td><input type="text" name="date" ></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td><input type="submit" name="edit" value="Pay Fees"></td>
+									</tr>
+								</table>
+							</form>
+						</center>
+							<?php
+						}
+						}
+					}
+				?>
 
 <!--Certificate Section -->
 				
@@ -805,14 +957,18 @@
 					if(isset($_POST['search_certificate'])){
 						$query = "select m.*, s.roll_no, s.name, s.father_name, s.email from marks m  join students s on m.s_no=s.s_no where s.roll_no='$_POST[roll_no]'";
 						$query_run = mysqli_query($connection, $query);
+						if(mysqli_num_rows($query_run) <= 0)
+						{
+						    echo "No results found";
+						} else {
 						while($row = mysqli_fetch_assoc($query_run)){
 							?>
 							<center>
-								<h2>Leaving Certificate</h2><br>
+								<h1>Leaving Certificate</h1><br>
 
 
-								<p><h6>Name:&nbsp;&nbsp;<span><?php echo $row['name'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email:&nbsp;&nbsp;<span></span><?php echo $row['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								Father's Name:&nbsp;&nbsp;<span><?php echo $row['father_name'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Roll No:&nbsp;&nbsp;<span><?php echo $row['roll_no'];?></span></h6><br><br>
+								<p><h5>Name:&nbsp;&nbsp;<span><?php echo $row['name'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email:&nbsp;&nbsp;<span></span><?php echo $row['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								Father's Name:&nbsp;&nbsp;<span><?php echo $row['father_name'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Roll No:&nbsp;&nbsp;<span><?php echo $row['roll_no'];?></span></h5><br><br>
 							
 								This is to certify that <b><?php echo $row['name'];?></b>, child of <b><?php echo $row['father_name'];?></b> has successfully completed the required college years from AISSMS IOIT with percentage of <b><?php echo $row['percentage'];?></b>.<p> Wishing him/her Best of Luck for Future!
 							</center><br><br>
@@ -821,6 +977,95 @@
 							<button onclick="window.print()">Print Certificate</button>
 							<?php
 						}
+						}
+					}
+				?>
+
+<!-- Time Table Section-->
+
+				<?php
+					if(isset($_POST['add_timetable'])){
+						?>
+						<center>
+							<h3>Create or Display Time Table</h3><br><br>
+							<form action="" method="POST">
+								Create Timetable: 
+								<input type="submit" name="create_tt" value="Create Time Table"><br><br>
+								Display Timetable: 
+								<input type="submit" name="display_tt" value="Display Time Table">
+							</form>
+						</center>
+						<?php
+					}
+
+					if(isset($_POST['create_tt'])){
+						?>
+						<center><h3>Add Time Table:</h3></center>
+						<form action="add_timetable.php" method="POST">
+							<table>
+								<tr>
+									<td>Teacher Name: </td>
+									<td><input type="text" name="t_name" required></td>
+								</tr>
+								<tr>
+									<td>Subject: </td>
+									<td><input type="text" name="subject" required></td>
+								</tr>
+								<tr>
+									<td>Class: </td>
+									<td><input type="text" name="class" required></td>
+								</tr>
+								<tr>
+									<td>Start time: </td>
+									<td><input type="text" name="start_time" required></td>
+								</tr>
+								<tr>
+									<td>End time: </td>
+									<td><input type="text" name="end_time" required></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type="submit" name="add" value="Add Timetable"></td>
+								</tr>
+							</table>
+						</form>
+						<?php
+
+					}
+
+					if(isset($_POST['display_tt'])){
+						?>
+						<center>
+							<h3> Time Table Display</h3><br>
+							<table>
+								<tr>
+									<td id="td"><b>Teacher Name</b></td>
+									<td id="td"><b>Subject</b></td>
+									<td id="td"><b>Class</b></td>
+									<td id="td"><b>Start Time</b></td>
+									<td id="td"><b>End Time</b></td>
+								</tr>
+							</table>
+						</center>
+						<?php
+					$query = "select * from timetable";
+					$query_run = mysqli_query($connection,$query);
+					while ($row = mysqli_fetch_assoc($query_run)) 
+					{
+						?>
+						<center>
+						<table style="border-collapse: collapse;border: 1px solid black;">
+							<tr>
+								<td id="td"><?php echo $row['t_name']?></td>
+								<td id="td"><?php echo $row['subject']?></td>
+								<td id="td"><?php echo $row['class']?></td>
+								<td id="td"><?php echo $row['start_time']?></td>
+								<td id="td"><?php echo $row['end_time']?></td>
+							</tr>
+						</table>
+						</center>
+						<?php
+								}
 					}
 				?>
 
