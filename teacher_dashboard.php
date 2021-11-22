@@ -53,7 +53,7 @@
 	</head>
 	<body>
 		<div id="header">
-			<center>Student Management System &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <?php echo $_SESSION['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name:<?php echo $_SESSION['name'];?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<center>College Management System &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <?php echo $_SESSION['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name:<?php echo $_SESSION['name'];?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="logout.php">Logout</a>
 		</center>
 		</div>
@@ -69,6 +69,11 @@
 					<tr>
 						<td>
 							<input type="submit" name="edit_detail" value="Edit Details">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="submit" name="show_timetable" value="Timetable">
 						</td>
 					</tr>
 				</table>
@@ -152,7 +157,7 @@
 									<b>Teacher ID:</b>
 								</td> 
 								<td>
-									<input type="text" name="t_id" value="<?php echo $row['t_id']?>" >
+									<input type="text" name="t_id" value="<?php echo $row['t_id']?>" disabled>
 								</td>
 							</tr>
 							<tr>
@@ -207,6 +212,44 @@
 				}
 			}
 			?>
+
+			<?php
+				if(isset($_POST['show_timetable'])){
+						?>
+						<center>
+							<h3> Time Table Display</h3><br>
+							<table>
+								<tr>
+									<td id="td"><b>Teacher Name</b></td>
+									<td id="td"><b>Subject</b></td>
+									<td id="td"><b>Class</b></td>
+									<td id="td"><b>Start Time</b></td>
+									<td id="td"><b>End Time</b></td>
+								</tr>
+							</table>
+						</center>
+						<?php
+					$query = "select * from timetable";
+					$query_run = mysqli_query($connection,$query);
+					while ($row = mysqli_fetch_assoc($query_run)) 
+					{
+						?>
+						<center>
+						<table style="border-collapse: collapse;border: 1px solid black;">
+							<tr>
+								<td id="td"><?php echo $row['t_name']?></td>
+								<td id="td"><?php echo $row['subject']?></td>
+								<td id="td"><?php echo $row['class']?></td>
+								<td id="td"><?php echo $row['start_time']?></td>
+								<td id="td"><?php echo $row['end_time']?></td>
+							</tr>
+						</table>
+						</center>
+						<?php
+								}
+					}
+				?>
+			
 			</div>
 		</div>
 	</body>
