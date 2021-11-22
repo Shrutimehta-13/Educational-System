@@ -14,7 +14,7 @@
 				<input type="submit" name="student_login" value="Student Login" required>
 				<input type="submit" name="teacher_login" value="Teacher Login" required>
 			</form>
-			
+
 		</center>
 	</body>
 </html>
@@ -32,7 +32,7 @@
   	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   	    <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js"></script>
   		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  	    <link rel="stylesheet" href="styles.css">
+  	    <link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
 
@@ -42,7 +42,7 @@
 
 		<div class="navigation-bar" id="home">
 
-			
+
 			<nav class="navbar navbar-expand-lg navbar-light bg-light heading">
   				<a class="navbar-brand" href="#">
 			    <img src="https://previews.123rf.com/images/captainvector/captainvector1703/captainvector170309311/74165534-college-logo-element.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -108,7 +108,7 @@
 
 	<section class="colored-section" id="testimonials">
 	    <div id="testimonial-carousel" class="carousel slide" data-bs-ride="false">
-	    	
+
 	        <div class="carousel-inner">
 	        	<div class="carousel-item active container-fluid">
 	            		<h4 class="testimonial-text">“This program has been great so far. The faculty is supportive and readily available. The courses and individual lessons have been clear and coherent. I am able to work at my own pace, while also having instructors and other students available to answer questions or engage in discussions.”</h4>
