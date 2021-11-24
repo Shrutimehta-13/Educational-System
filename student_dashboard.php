@@ -81,6 +81,11 @@
 							<input type="submit" name="show_timetable" value="Time Table">
 						</td>
 					</tr>
+					<tr>
+						<td>
+							<input type="submit" name="submit_query" value="Submit Query">
+						</td>
+					</tr>
 				</table>
 			</form>
 		</div>
@@ -376,6 +381,28 @@
 								}
 					}
 				?>
+
+				<?php
+			if(isset($_POST['submit_query'])){
+							?>
+							<center>
+							<form action="submit_query.php" method="POST">
+								<table>
+									<tr>
+										<td>Write your query: </td>
+										<td><textarea rows="3" cols="40" name="query"></textarea></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td><input type="submit" name="add" value="Add Query"></td>
+									</tr>
+								</table><br><br>
+							</form>
+							</center>
+							<?php
+						}
+				?>
+
 
 			</div>
 		</div>
