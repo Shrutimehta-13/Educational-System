@@ -8,7 +8,7 @@
 	  	<script type="text/javascript" src="bootstrap-4.4.1/js/juqery_latest.js"></script>
 	  	<script type="text/javascript" src="bootstrap-4.4.1/js/bootstrap.min.js"></script>
 		<style type="text/css">
-			#header{
+		#header{
 			height: 10%;
 			width: 100%;
 			top: 2%;
@@ -17,10 +17,11 @@
 			color: white;
 		}
 		#left_side{
-			height: 90%;
+			height: 75%;
 			width: 15%;
-			top: 10%;
-			position: fixed;
+			top: 15%;
+			left: 2%;
+			position:relative;
 		}
 		#right_side{
 			height: 75%;
@@ -44,6 +45,10 @@
 			text-align: left;
 			width: 200px;
 		}
+		#body{
+			height:900px;
+		}
+		
 		</style>
 		<?php
 			session_start();
@@ -51,7 +56,7 @@
 			$db = mysqli_select_db($connection,"sms");
 		?>
 	</head>
-	<body>
+	<body id="body">
 		<div id="header">
 			<center>College Management System &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <?php echo $_SESSION['email'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name:<?php echo $_SESSION['name'];?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="logout.php">Logout</a>
@@ -60,6 +65,7 @@
 		<span id="top_span"><marquee>Note:- This portal is open till 31 March 2022...Plz edit your information, if wrong.</marquee></span>
 		<div id="left_side"><br><br>
 			<form action="" method="POST">
+				<h5>Student Section</h5>
 				<table>
 					<tr>
 						<td>
@@ -89,6 +95,7 @@
 				</table>
 			</form><br>
 			<form action="" method="POST">
+				<h5>Teacher Section</h5>
 				<table>
 					<tr>
 						<td>
@@ -118,6 +125,7 @@
 				</table>
 			</form><br>
 			<form action="" method="POST">
+				<h5>Marks Section</h5>
 				<table>
 					<tr>
 						<td>
@@ -137,6 +145,7 @@
 				</table>
 			</form><br>
 			<form action="" method="POST">
+				<h5>Other Sections</h5>
 				<table>
 					<tr>
 						<td>
@@ -159,6 +168,15 @@
 					<tr>
 						<td>
 							<input type="submit" name="add_timetable" value="Time Table">
+						</td>
+					</tr>
+				</table>
+			</form>
+			<form action="" method="POST">
+				<table>
+					<tr>
+						<td>
+							<input type="submit" name="show_queries" value="Show Student Queries">
 						</td>
 					</tr>
 				</table>
@@ -271,7 +289,7 @@
 									</tr>
 									<tr>
 										<td><b>Class:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-										<td><select name="class" required>
+										<td><select name="class">
 						                    <option value=""><?php echo $row['class'];?></option> 
 						                    <option value="FE">FE</option>
 						                    <option value="SE">SE</option>
@@ -281,7 +299,7 @@
 									</tr>
 									<tr>
 										<td><b>Department:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-										<td><select name="department" required>
+										<td><select name="department">
 						                    <option value=""><?php echo $row['department'];?></option> 
 						                    <option value="Computer">Computer</option> 
 						                    <option value="IT">IT</option>
@@ -1068,6 +1086,41 @@
 								}
 					}
 				?>
+
+<!-- Queries Section -->
+				<?php
+					if(isset($_POST['show_queries'])){
+						?>
+						<center>
+							<h3> Students Queries</h3>
+							<table>
+								<tr>
+									<td id="td"><b>Name</b></td>
+									<td id="td"><b>Email</b></td>
+									<td id="td"><b>Query</b></td>
+								</tr>
+							</table>
+						</center>
+						<?php
+					$query = "select * from queries";
+					$query_run = mysqli_query($connection,$query);
+					while ($row = mysqli_fetch_assoc($query_run)) 
+					{
+						?>
+						<center>
+						<table style="border-collapse: collapse;border: 1px solid black;">
+							<tr>
+								<td id="td"><?php echo $row['name']?></td>
+								<td id="td"><?php echo $row['email']?></td>
+								<td id="td"><?php echo $row['query']?></td>
+							</tr>
+						</table>
+						</center>
+						<?php
+								}
+					}
+				?>
+
 
 			</div>
 		</div>
